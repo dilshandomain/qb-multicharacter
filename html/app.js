@@ -170,9 +170,39 @@ document.addEventListener("DOMContentLoaded", () => {
             // Listen for messages from login iframe
             window.addEventListener('message', (event) => {
                 if (event.data.type === 'login') {
-                    axios.post("https://qb-multicharacter/login", event.data.data);
+                    // Forward to server with proper callback handling
+                    axios.post("https://qb-multicharacter/login", event.data.data)
+                        .catch(error => {
+                            console.error('Login request failed:', error);
+                            // Send error back to login iframe
+                            const loginFrame = document.querySelector('#login-container iframe');
+                            if (loginFrame && loginFrame.contentWindow) {
+                                loginFrame.contentWindow.postMessage({
+                                    action: 'loginResult',
+                                    result: {
+                                        success: false,
+                                        message: 'Connection error. Please try again.'
+                                    }
+                                }, '*');
+                            }
+                        });
                 } else if (event.data.type === 'register') {
-                    axios.post("https://qb-multicharacter/register", event.data.data);
+                    // Forward to server with proper callback handling
+                    axios.post("https://qb-multicharacter/register", event.data.data)
+                        .catch(error => {
+                            console.error('Register request failed:', error);
+                            // Send error back to login iframe
+                            const loginFrame = document.querySelector('#login-container iframe');
+                            if (loginFrame && loginFrame.contentWindow) {
+                                loginFrame.contentWindow.postMessage({
+                                    action: 'registerResult',
+                                    result: {
+                                        success: false,
+                                        message: 'Connection error. Please try again.'
+                                    }
+                                }, '*');
+                            }
+                        });
                 }
             });
             

@@ -3,11 +3,13 @@ class LoginApp {
         this.currentForm = 'login';
         this.isLoading = false;
         this.toastContainer = null;
+        this.backgroundMusic = null;
         this.init();
     }
 
     init() {
         this.createToastContainer();
+        this.setupBackgroundMusic();
         this.bindEvents();
         this.setupPasswordToggles();
         this.setupFormAnimations();
@@ -29,6 +31,7 @@ class LoginApp {
             const data = event.data;
             
             if (data.action === 'loginResult') {
+                this.setLoading(false); // Always hide loading on result
                 if (data.result.success) {
                     this.showToast('Welcome back! Loading your characters...', 'success');
                     setTimeout(() => {
@@ -38,6 +41,7 @@ class LoginApp {
                     this.showToast(data.result.message, 'error');
                 }
             } else if (data.action === 'registerResult') {
+                this.setLoading(false); // Always hide loading on result
                 if (data.result.success) {
                     this.showToast('Account created successfully! You can now sign in.', 'success');
                     setTimeout(() => {
@@ -232,6 +236,20 @@ class LoginApp {
                 }
             }, '*');
 
+            // Set a timeout to hide loading if no response comes back
+            setTimeout(() => {
+                if (this.isLoading) {
+                    this.setLoading(false);
+                    this.showToast('Request timeout. Please try again.', 'error');
+                }
+            }, 10000); // 10 second timeout
+            // Add timeout to prevent infinite loading
+            setTimeout(() => {
+                if (this.isLoading) {
+                    this.setLoading(false);
+                    this.showToast('Request timed out. Please try again.', 'error');
+                }
+            }, 10000); // 10 second timeout
         } catch (error) {
             this.showToast('Connection error. Please try again.', 'error');
             this.setLoading(false);
@@ -263,6 +281,20 @@ class LoginApp {
                 }
             }, '*');
 
+            // Set a timeout to hide loading if no response comes back
+            setTimeout(() => {
+                if (this.isLoading) {
+                    this.setLoading(false);
+                    this.showToast('Request timeout. Please try again.', 'error');
+                }
+            }, 10000); // 10 second timeout
+            // Add timeout to prevent infinite loading
+            setTimeout(() => {
+                if (this.isLoading) {
+                    this.setLoading(false);
+                    this.showToast('Request timed out. Please try again.', 'error');
+                }
+            }, 10000); // 10 second timeout
         } catch (error) {
             this.showToast('Connection error. Please try again.', 'error');
             this.setLoading(false);
@@ -337,6 +369,18 @@ class LoginApp {
     }
 
     hideLoginUI() {
+        // Fade out music
+        if (this.backgroundMusic && !this.backgroundMusic.paused) {
+            const fadeOut = setInterval(() => {
+                if (this.backgroundMusic.volume > 0.1) {
+                    this.backgroundMusic.volume -= 0.1;
+                } else {
+                    this.backgroundMusic.pause();
+                    clearInterval(fadeOut);
+                }
+            }, 100);
+        }
+        
         const loginApp = document.getElementById('login-app');
         loginApp.style.transition = 'all 0.5s ease-out';
         loginApp.style.transform = 'scale(0.9)';

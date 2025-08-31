@@ -14,6 +14,12 @@ Config.AllowRegistration = true                                       -- Allow n
 Config.MinPasswordLength = 6                                          -- Minimum password length
 Config.MaxLoginAttempts = 5                                           -- Maximum login attempts before temporary lockout
 Config.LockoutDuration = 300                                          -- Lockout duration in seconds (5 minutes)
+Config.LoginTimeout = 10                                              -- Login request timeout in seconds
+Config.BackgroundMusic = {
+    enabled = true,                                                   -- Enable background music
+    volume = 0.3,                                                     -- Music volume (0.0 to 1.0)
+    url = 'https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3'  -- Replace with your MP3 URL
+}
 
 Config.DefaultNumberOfCharacters = 5                                  -- Define maximum amount of default characters (maximum 5 characters defined by default)
 Config.PlayersNumberOfCharacters = {                                  -- Define maximum amount of player characters by rockstar license (you can find this license in your server's database in the player table)

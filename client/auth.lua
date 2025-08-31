@@ -63,12 +63,12 @@ end)
 -- NUI Callbacks
 RegisterNUICallback('login', function(data, cb)
     TriggerServerEvent('qb-multicharacter:server:attemptLogin', data.email, data.password)
-    cb('ok')
+    cb({status = 'ok'})
 end)
 
 RegisterNUICallback('register', function(data, cb)
     TriggerServerEvent('qb-multicharacter:server:attemptRegister', data.username, data.email, data.password)
-    cb('ok')
+    cb({status = 'ok'})
 end)
 
 -- Exports

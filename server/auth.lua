@@ -127,6 +127,9 @@ RegisterNetEvent('qb-multicharacter:server:attemptRegister', function(username, 
     local src = source
     local license = QBCore.Functions.GetIdentifier(src, 'license')
 
+    -- Add small delay to prevent rapid requests
+    Wait(500)
+
     if not license then
         TriggerClientEvent('qb-multicharacter:client:registerResult', src, {
             success = false,

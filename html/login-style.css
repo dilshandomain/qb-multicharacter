@@ -217,23 +217,10 @@ body {
 .loading {
     opacity: 0.7;
     pointer-events: none;
-    position: relative;
 }
 
 .loading button {
     cursor: not-allowed;
-}
-
-.loading::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: inherit;
-    pointer-events: none;
 }
 
 /* Enhanced focus states */
@@ -318,5 +305,39 @@ button:active {
 @media (prefers-color-scheme: dark) {
     body {
         background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+    }
+}
+
+/* Music control animations */
+#music-icon {
+    transition: all 0.3s ease;
+}
+
+/* Additional loading improvements */
+.loading-overlay {
+    backdrop-filter: blur(8px);
+}
+
+.loading-overlay .bg-fivem-surface\/95 {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Improved button feedback */
+button:focus-visible {
+    outline: 2px solid rgba(99, 102, 241, 0.5);
+    outline-offset: 2px;
+}
+
+/* Better error state styling */
+.input-error {
+    animation: shake 0.5s ease-in-out, errorGlow 2s ease-in-out;
+}
+
+@keyframes errorGlow {
+    0%, 100% {
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.5);
     }
 }

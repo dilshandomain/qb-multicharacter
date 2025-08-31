@@ -369,18 +369,6 @@ class LoginApp {
     }
 
     hideLoginUI() {
-        // Fade out music
-        if (this.backgroundMusic && !this.backgroundMusic.paused) {
-            const fadeOut = setInterval(() => {
-                if (this.backgroundMusic.volume > 0.1) {
-                    this.backgroundMusic.volume -= 0.1;
-                } else {
-                    this.backgroundMusic.pause();
-                    clearInterval(fadeOut);
-                }
-            }, 100);
-        }
-        
         const loginApp = document.getElementById('login-app');
         loginApp.style.transition = 'all 0.5s ease-out';
         loginApp.style.transform = 'scale(0.9)';
@@ -407,7 +395,7 @@ class LoginApp {
         
         toast.innerHTML = `
             <div class="flex items-center">
-                <span class="material-symbols-outlined mr-3 text-xl">
+        musicControl.className = 'fixed top-6 left-6 z-50 bg-fivem-surface/80 backdrop-blur-md rounded-full p-3 border border-gray-700/50 cursor-pointer transition-all duration-300 hover:bg-fivem-surface hover:scale-110 group shadow-lg';
                     ${icon}
                 </span>
                 <span class="flex-1">${message}</span>
@@ -423,6 +411,8 @@ class LoginApp {
         }, 4000);
 
         // Add click to dismiss
+        musicControl.title = 'Toggle Background Music';
+        
         toast.addEventListener('click', () => {
             this.removeToast(toast);
         });
